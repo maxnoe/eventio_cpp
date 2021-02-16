@@ -15,10 +15,10 @@ class File;
 
 using bytes_t = std::vector<std::byte>;
 const std::array<std::byte, 4> MARKER_BYTES_LE {
-    std::byte{0xd4},
-    std::byte{0x1f},
-    std::byte{0x8a},
     std::byte{0x37},
+    std::byte{0x8a},
+    std::byte{0x1f},
+    std::byte{0xd4},
 };
 const std::uint64_t SYNC_MARKER = UINT64_C(0xd41f8a37);
 

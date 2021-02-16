@@ -4,13 +4,20 @@ project(eventio VERSION 0.1.0 LANGUAGES CXX)
 
 include(GNUInstallDirs)
 
-# IDE support
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+if (NOT CMAKE_BUILD_TYPE)
+    message(STATUS "No build type selected, default to Release")
+    set(CMAKE_BUILD_TYPE "Release")
+endif()
+
+
+# only 1.70 comes with zstd support
+find_package(Boost 1.70 REQUIRED COMPONENTS iostreams)
 
 
 add_library(eventio SHARED src/File.cpp src/Object.cpp)
 set_property(TARGET eventio PROPERTY PUBLIC_HEADER include/eventio/File.h;include/eventio/Object.h)
 target_include_directories(eventio PUBLIC include)
+target_link_libraries(eventio PUBLIC Boost::iostreams)
 
 target_compile_features(eventio PUBLIC cxx_std_17)
 set_property(TARGET eventio PROPERTY CXX_EXTENSIONS OFF)

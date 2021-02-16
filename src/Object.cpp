@@ -62,7 +62,7 @@ Object::Object(uint64_t address, ObjectHeader header) :
 }
 
 bytes_t Object::read(File& file) {
-    file.file.seekg(address);
+    file.seekg(address);
     return file.read(header.size());
 }
 
@@ -78,7 +78,7 @@ std::unique_ptr<Object> Object::read_next_child(File& file) {
         throw std::runtime_error("No objects left in container");
     }
 
-    file.file.seekg(next_header);
+    file.seekg(next_header);
     auto object = file.read_object(false);
     next_header += object->header.header_size() + object->header.size();
 
